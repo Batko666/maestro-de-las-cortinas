@@ -27,7 +27,7 @@
     .brand-sub { color:var(--muted); font-size:13px; line-height:1.45; }
     .pill { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--muted); border-radius:999px; font-size:12px; font-weight:700; }
     .dot { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 14px rgba(34,197,94,.4); }
-    .hero { display:grid; grid-template-columns:1.12fr .88fr; gap:16px; margin-bottom:16px; }
+    .hero { display:block; margin-bottom:16px; }
     .hero-card,.card { background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 22%), var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
     .hero-card { padding:24px; position:relative; overflow:hidden; }
     .hero-card::after { content:''; position:absolute; inset:auto -44px -44px auto; width:180px; height:180px; background:radial-gradient(circle, rgba(251,208,0,.15), transparent 65%); pointer-events:none; }
@@ -158,26 +158,14 @@
     <div class="hero">
       <div class="hero-card">
         <div class="hero-title">Cotiza tu servicio en minutos</div>
-        <div class="hero-desc">Elige el servicio que necesitas, completa los datos y obtén una cotización estimada al instante. También puedes combinar distintos servicios y ver el total actualizado en tiempo real.</div>
-        <div class="help-inline" style="margin-top:16px;">✔ <strong>Instalación y visita técnica incluidas al comprar tus cortinas:</strong> Cuando adquieres cortinas con nosotros, la visita al domicilio y la instalación están <strong>sin costo adicional</strong> en la Región Metropolitana. Para otras regiones, aplica un costo de traslado adicional.</div>
+        <div class="help-inline" style="margin-top:12px;">✔ <strong>Instalación y visita técnica incluidas</strong> al comprar tus cortinas, sin costo adicional en la Región Metropolitana. Otras regiones: sujeto a costo de traslado.</div>
         <div class="how-grid">
           <div class="how-step"><strong>1. Elige un servicio</strong><span>Selecciona si quieres cotizar cortinas nuevas, lavado o reparaciones.</span></div>
           <div class="how-step"><strong>2. Agrega lo que necesites</strong><span>Puedes sumar más de una cortina, más de un lavado o varias reparaciones en la misma cotización.</span></div>
           <div class="how-step"><strong>3. Revisa tu total</strong><span>El resumen se actualiza al instante mientras cambias entre servicios.</span></div>
         </div>
       </div>
-      <div class="hero-card estimate-card">
-        <div>
-          <div class="estimate-label">Total estimado</div>
-          <div class="estimate-value" id="heroTotal">$0</div>
-          <div class="estimate-sub" id="heroSub">Aún no has agregado servicios a tu cotización.</div>
-        </div>
-        <div class="estimate-grid">
-          <div class="mini-metric"><div class="k">Cortinas</div><div class="v" id="metricCurtains">0</div></div>
-          <div class="mini-metric"><div class="k">Lavados</div><div class="v" id="metricWash">0</div></div>
-          <div class="mini-metric"><div class="k">Reparaciones</div><div class="v" id="metricRepairs">0</div></div>
-        </div>
-      </div>
+
     </div>
 
     <div class="layout">
@@ -719,11 +707,7 @@
       return { curtains: { items: curtains, subtotal: curtainSubtotal, qty: curtainQty }, wash: { items: washes, subtotal: washSubtotal, totalQty: washQty }, repairs, transport, total: curtainSubtotal + washSubtotal + repairs.subtotal + transport.cost };
     }
     function renderSummary(calc) {
-      document.getElementById('heroTotal').textContent = money(calc.total);
-      document.getElementById('heroSub').textContent = calc.total > 0 ? `Incluye ${calc.curtains.items.length} ítem(s) de cortinas, ${calc.wash.items.length} de lavado y ${calc.repairs.items.length} reparación(es).` : 'Aún no has agregado servicios a tu cotización.';
-      document.getElementById('metricCurtains').textContent = String(calc.curtains.qty);
-      document.getElementById('metricWash').textContent = String(calc.wash.totalQty);
-      document.getElementById('metricRepairs').textContent = String(calc.repairs.items.length);
+      // heroTotal y métricas removidos del HTML
       document.getElementById('sumCurtains').textContent = money(calc.curtains.subtotal);
       document.getElementById('sumCurtainsMeta').textContent = `${calc.curtains.items.length} ítem(s) · ${calc.curtains.qty} unidad(es)`;
       document.getElementById('sumWash').textContent = money(calc.wash.subtotal);
